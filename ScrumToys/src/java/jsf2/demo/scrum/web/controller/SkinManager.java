@@ -57,12 +57,10 @@ public class SkinManager extends AbstractManager implements Serializable {
     @ManagedProperty(value="#{skinValuesManager}")
     private SkinValuesManager skinValuesManager;
 
-    @PostConstruct
-    public void construct() {
-        selectedSkin = skinValuesManager.getDefaultSkinCss();
-    }
-
     public String getSelectedSkin() {
+        if(selectedSkin == null) {
+            selectedSkin = skinValuesManager.getDefaultSkinCss();
+        }
         return selectedSkin;
     }
 

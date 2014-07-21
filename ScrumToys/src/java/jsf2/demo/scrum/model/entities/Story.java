@@ -53,8 +53,24 @@ import java.util.List;
 @Table(name = "stories", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "sprint_id"}))
 @NamedQueries({@NamedQuery(name = "story.countByNameAndSprint", query = "select count(s) from Story as s where s.name = :name and s.sprint = :sprint and not(s = :currentStory)"),
         @NamedQuery(name = "story.new.countByNameAndSprint", query = "select count(s) from Story as s where s.name = :name and s.sprint = :sprint")})
-public class Story extends AbstractEntity implements Serializable {
+public class Story implements Serializable {
 
+        @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isNew() {
+        return (this.id == null);
+    }
+    
     private static final long serialVersionUID = 1L;
     @Column(nullable = false)
     private String name;

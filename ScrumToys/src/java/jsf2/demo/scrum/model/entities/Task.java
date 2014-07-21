@@ -50,8 +50,24 @@ import java.util.Date;
 @Table(name = "tasks", uniqueConstraints = @UniqueConstraint(columnNames = {"name", "story_id"}))
 @NamedQueries({@NamedQuery(name = "task.countByNameAndStory", query = "select count(t) from Task as t where t.name = :name and t.story = :story and not(t = :currentTask)"),
         @NamedQuery(name = "task.new.countByNameAndStory", query = "select count(t) from Task as t where t.name = :name and t.story = :story")})
-public class Task extends AbstractEntity implements Serializable {
+public class Task implements Serializable {
 
+            @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isNew() {
+        return (this.id == null);
+    }
+    
     private static final long serialVersionUID = 1L;
 
     @Column(nullable = false)

@@ -55,6 +55,7 @@ import javax.faces.validator.ValidatorException;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Level;
@@ -243,7 +244,7 @@ public class ProjectManager extends AbstractManager implements Serializable {
     }
 
     public void setProjectItems(List<SelectItem> projectItems) {
-        this.projectItems = projectItems;
+        this.projectItems = new ArrayList<SelectItem>(projectItems);
     }
 
     /**
@@ -257,7 +258,7 @@ public class ProjectManager extends AbstractManager implements Serializable {
      * @param projectList the projectList to set
      */
     public void setProjectList(List<Project> projectList) {
-        this.projectList = projectList;
+        this.projectList = new ArrayList<Project>(projectList);
     }
 
     public String viewSprints() {

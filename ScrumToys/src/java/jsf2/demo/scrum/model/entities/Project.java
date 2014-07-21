@@ -47,6 +47,9 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -63,8 +66,23 @@ import javax.persistence.TemporalType;
         @NamedQuery(name = "project.getAllOpen", query = "select p from Project as p where p.endDate is null"),
         @NamedQuery(name = "project.countByName", query = "select count(p) from Project as p where p.name = :name and not(p = :currentProject)"),
         @NamedQuery(name = "project.new.countByName", query = "select count(p) from Project as p where p.name = :name")})
-public class Project extends AbstractEntity implements Serializable {
+public class Project implements Serializable {
 
+        @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public boolean isNew() {
+        return (this.id == null);
+    }
     private static final long serialVersionUID = 1L;
     @Column(nullable = false, unique = true)
     private String name;
